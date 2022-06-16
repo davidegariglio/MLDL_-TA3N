@@ -20,7 +20,9 @@ class VideoRecord(object):
 
     @property
     def segment_id(self):
-        return self._data.narration_id
+        # print(self._data)
+        # =01_01_2522
+        return self._data.video_id + "_" + str(self._data.uid)
 
     @property
     def path(self):
@@ -70,8 +72,11 @@ class TSNDataSet(data.Dataset):
 
         self.list_file = list_file
         self.num_segments = num_segments
+        print(self.num_segments)
         self.total_segments = total_segments
-        self.new_length = new_length
+        # self.new_length = new_length
+        self.new_length = 1
+
         self.modality = modality
         self.image_tmpl = image_tmpl
         self.transform = transform
@@ -118,24 +123,26 @@ class TSNDataSet(data.Dataset):
         self.video_list = self.video_list*n_repeat + self.video_list[:n_left]
 
     def _sample_indices(self, record):
+        #import pdb; pdb.set_trace()
+
         """
 
         :param record: VideoRecord
         :return: list
         """
         #np.random.seed(1)
-        average_duration = (record.num_frames - self.new_length + 1) // self.num_segments
+        average_duration = (record.num_frames) // self.num_segments
         if average_duration > 0:
             offsets = np.multiply(list(range(self.num_segments)), average_duration) + randint(average_duration, size=self.num_segments)
         elif record.num_frames > self.num_segments:
-            offsets = np.sort(randint(record.num_frames - self.new_length + 1, size=self.num_segments))
+            offsets = np.sort(randint(record.num_frames, size=self.num_segments))
         else:
             offsets = np.zeros((self.num_segments,))
         return offsets + 1
 
     def _get_val_indices(self, record):
-        num_min = self.num_segments + self.new_length - 1
-        num_select = record.num_frames - self.new_length + 1
+        num_min = self.num_segments
+        num_select = record.num_frames
 
         if record.num_frames >= num_min:
             tick = float(num_select) / float(self.num_segments)
@@ -145,9 +152,8 @@ class TSNDataSet(data.Dataset):
         return offsets + 1
 
     def _get_test_indices(self, record):
-        num_min = self.num_segments + self.new_length - 1
-        num_select = record.num_frames - self.new_length + 1
-
+        num_min = self.num_segments
+        num_select = record.num_frames
         if record.num_frames >= num_min:
             tick = float(num_select) / float(self.num_segments)
             offsets = np.array([int(tick / 2.0 + tick * float(x)) for x in range(self.num_segments)]) # pick the central frame in each segment
@@ -168,13 +174,14 @@ class TSNDataSet(data.Dataset):
         else:
             segment_indices = self._get_test_indices(record)
 
+        print(segment_indices)
         return self.get(record, segment_indices)
 
     def get(self, record, indices):
 
         frames = list()
 
-        for seg_ind in indices:
+        for seg_ind in [0,1,2,3,4]:
             p = int(seg_ind)
             for i in range(self.new_length):
                 seg_feats = self._load_feature(record.segment_id, p)
