@@ -130,6 +130,7 @@ print(Fore.CYAN + 'loading data......')
 
 data_length = 1 if args.modality == "RGB" else 1
 num_test = len(pd.read_pickle(args.test_list).index)
+print('***SIAMO QUA***')
 if args.noun_target_data is not None:
 	data_set = TSNDataSet(args.test_target_data+".pkl", args.test_list, num_dataload=num_test, num_segments=args.test_segments,
 		new_length=data_length, modality=args.modality,

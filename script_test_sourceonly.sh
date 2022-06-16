@@ -2,8 +2,8 @@
 
 #====== parameters ======#
 dataset="epic" # hmdb_ucf | hmdb_ucf_small | ucf_olympic
-num_class='97,300'
-training=false # true | false
+num_class='97,300' # 8??????????????''
+training=true # true | false
 testing=true # true | false
 modality=ALL
 frame_type=feature # frame | feature
@@ -28,25 +28,28 @@ else
 fi
 
 #====== select dataset ======#
-path_data_root="data/" # depend on users
-path_labels_root="annotations" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
+path_data_root="/content/drive/MyDrive/MLDL_2022/project/EGO_Project_correct/Pre-extracted_feat/RGB/ek_tsm" # depend on users
+path_labels_root="/content/drive/MyDrive/MLDL_2022/project/pkl_files" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
 path_exp_root="model/action-model/" # depend on users
 train_metric="all"
 if [ "$dataset" = "epic" ]
 then
-	dataset_source="source_train" # depend on users
-	dataset_target="target_train" # depend on users
-	dataset_val="target_test" # _noun" # depend on users
+	# dataset_source="source_train" # Dx-Dx.train
+	# dataset_target="target_train" # depend on users
+	# dataset_val="target_test" # _noun" # depend on users
 	num_source=16115 # number of training data (source)
 	num_target=26115 # number of training data (target)
 
-	path_data_source=$path_data_root'/'$dataset_source
-	path_data_target=$path_data_root'/'$dataset_target
-	path_data_val=$path_data_root'/'$dataset_val
+  source=1
+  target=2
 
-	train_source_list=$path_labels_root'/EPIC_100_uda_source_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
-	train_target_list=$path_labels_root'/EPIC_100_uda_target_train_timestamps.pkl' # '/domain_adaptation_target_train_pre-release_v6.pkl'
-	val_list=$path_labels_root'/EPIC_100_uda_target_test_timestamps.pkl' # '/domain_adaptation_target_test_pre-release_v3.pkl' # 'domain_adaptation_validation_pre-release_v3.pkl'
+	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
+	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
+	path_data_val=$path_data_root'/D'$source'-D'$target'_test' #missing _test
+
+	train_source_list=$path_labels_root'/D'$source'_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
+	train_target_list=$path_labels_root'/D'$target'_train.pkl' # '/domain_adaptation_target_train_pre-release_v6.pkl'
+	val_list=$path_labels_root'/D'$target'_test.pkl' # '/domain_adaptation_target_test_pre-release_v3.pkl' # 'domain_adaptation_validation_pre-release_v3.pkl'
 
 	path_exp=$path_exp_root'Testexp'
 fi
