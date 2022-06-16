@@ -20,7 +20,7 @@ pred_normalize="N"
 weighted_class_loss_DA="N"
 weighted_class_loss="N"
 
-if [ "$use_target" == "none" ] 
+if [ "$use_target" = "none" ] 
 then
 	exp_DA_name=baseline
 else
@@ -32,7 +32,7 @@ path_data_root="data/" # depend on users
 path_labels_root="annotations" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
 path_exp_root="model/action-model/" # depend on users
 train_metric="all"
-if [ "$dataset" == "epic" ]
+if [ "$dataset" = "epic" ]
 then
 	dataset_source="source_train" # depend on users
 	dataset_target="target_train" # depend on users
@@ -84,7 +84,7 @@ echo '('$bS', '$bS_2')'
 lr=3e-3
 optimizer=SGD
 
-if [ "$use_target" == "none" ] 
+if [ "$use_target" = "none" ] 
 then
 	dis_DA=none
 	alpha=0
