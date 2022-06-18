@@ -168,7 +168,7 @@ def main():
 							)
 
 	source_sampler = torch.utils.data.sampler.RandomSampler(source_set)
-	source_loader = torch.utils.data.DataLoader(source_set, batch_size=args.batch_size[0], shuffle=False, sampler=source_sampler, num_workers=args.workers, pin_memory=True)
+	source_loader = torch.utils.data.DataLoader(source_set, batch_size=args.batch_size[0], shuffle=False, sampler=source_sampler, num_workers=2, pin_memory=True)
 
 	target_set = TSNDataSet(args.train_target_data+".pkl", args.train_target_list, num_dataload=num_target_train, num_segments=args.num_segments,
 							new_length=data_length, modality=args.modality,
@@ -178,7 +178,7 @@ def main():
 							)
 
 	target_sampler = torch.utils.data.sampler.RandomSampler(target_set)
-	target_loader = torch.utils.data.DataLoader(target_set, batch_size=args.batch_size[1], shuffle=False, sampler=target_sampler, num_workers=args.workers, pin_memory=True)
+	target_loader = torch.utils.data.DataLoader(target_set, batch_size=args.batch_size[1], shuffle=False, sampler=target_sampler, num_workers=2, pin_memory=True)
 
 	# --- Optimizer ---#
 	# define loss function (criterion) and optimizer
@@ -929,7 +929,7 @@ def accuracy(output, target, topk=(1,)):
 
 	res = []
 	for k in topk:
-		correct_k = correct[:k].view(-1).float().sum(0)
+		correct_k = correct[:k].reshape(-1).float().sum(0)
 		res.append(correct_k.mul_(100.0 / batch_size))
 	return res
 

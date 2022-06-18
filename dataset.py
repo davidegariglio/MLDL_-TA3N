@@ -20,8 +20,6 @@ class VideoRecord(object):
 
     @property
     def segment_id(self):
-        # print(self._data)
-        # =01_01_2522
         return self._data.video_id + "_" + str(self._data.uid)
 
     @property
@@ -72,7 +70,6 @@ class TSNDataSet(data.Dataset):
 
         self.list_file = list_file
         self.num_segments = num_segments
-        print(self.num_segments)
         self.total_segments = total_segments
         # self.new_length = new_length
         self.new_length = 1
@@ -174,7 +171,6 @@ class TSNDataSet(data.Dataset):
         else:
             segment_indices = self._get_test_indices(record)
 
-        print(segment_indices)
         return self.get(record, segment_indices)
 
     def get(self, record, indices):

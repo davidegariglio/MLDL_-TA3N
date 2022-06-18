@@ -124,7 +124,7 @@ class VideoModel(nn.Module):
 		elif base_model == "TBN" and modality=="ALL":
 			self.feature_dim = 3072
 		elif base_model == "TBN":
-			self.feature_dim = 1024
+			self.feature_dim = 2048
 		else:
 			model_test = getattr(torchvision.models, base_model)(True) # model_test is only used for getting the dim #
 			self.feature_dim = model_test.fc.in_features

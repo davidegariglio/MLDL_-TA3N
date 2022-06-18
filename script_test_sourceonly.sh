@@ -2,7 +2,7 @@
 
 #====== parameters ======#
 dataset="epic" # hmdb_ucf | hmdb_ucf_small | ucf_olympic
-num_class='97,300' # 8??????????????''
+num_class='97,300' # formato: verb, noun (noi abbiamo teoricamente 8,0)
 training=true # true | false
 testing=true # true | false
 modality=RGB
