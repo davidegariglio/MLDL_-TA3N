@@ -143,7 +143,7 @@ else:
 		image_tmpl="img_{:05d}.t7" if args.modality in ['RGB', 'RGBDiff', 'RGBDiff2', 'RGBDiffplus'] else args.flow_prefix+"{}_{:05d}.t7",
 		test_mode=True
 		)
-data_loader = torch.utils.data.DataLoader(data_set, batch_size=args.bS, shuffle=False, num_workers=args.workers, pin_memory=True)
+data_loader = torch.utils.data.DataLoader(data_set, batch_size=args.bS, shuffle=False, num_workers=2, pin_memory=True)
 
 data_gen = tqdm(data_loader)
 
@@ -336,6 +336,7 @@ def validate(val_loader, verb_model, criterion, num_class, noun_model=None, val_
 			end = time.time()
 
 	with open(args.result_json, "w") as f:
+
 		json.dump({'results_target':results_dict, "version": "0.2",
   "challenge": "domain_adaptation","sls_pt": 0,
   "sls_tl": 0,

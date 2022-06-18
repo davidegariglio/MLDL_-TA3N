@@ -110,7 +110,7 @@ class VideoModel(nn.Module):
 		self._prepare_DA(num_class, base_model, modality)
 
 		if not self.before_softmax:
-			self.softmax = nn.Softmax()
+			self.softmax = nn.Softmax(dim=1)
 
 		self._enable_pbn = partial_bn
 		if partial_bn:
