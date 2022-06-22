@@ -112,8 +112,6 @@ else
 	exp_path=$path_exp'-'$optimizer'-share_params_'$share_params'-lr_'$lr'-bS_'$bS'_'$bS_2'/'$dataset'-'$num_segments'seg-disDA_'$dis_DA'-alpha_'$alpha'-advDA_'$adv_DA'-beta_'$beta_0'_'$beta_1'_'$beta_2'-useBN_'$use_bn'-addlossDA_'$add_loss_DA'-gamma_'$gamma'-ensDA_'$ens_DA'-mu_'$mu'-useAttn_'$use_attn'-n_attn_'$n_attn'/'
 fi
 
-echo 'exp_path: '$exp_path
-
 
 #====== select mode ======#
 if ($training) 
@@ -130,7 +128,7 @@ then
 	gd=20
 	
 	#------ main command ------#
-	echo $modality
+
 	python main.py $num_class $modality $train_source_list $train_target_list $val_list $path_data_val $path_data_source $path_data_target --exp_path $exp_path \
 	--train_metric $train_metric --dann_warmup --arch $arch --pretrained $pretrained --baseline_type $baseline_type --frame_aggregation $frame_aggregation \
 	--num_segments $num_segments --val_segments $val_segments --add_fc $add_fc --fc_dim $fc_dim --dropout_i 0.5 --dropout_v 0.5 \
@@ -150,10 +148,11 @@ fi
 if ($testing)
 then
 	model=checkpoint # checkpoint | model_best
-	echo $model
+	#echo $model
 
 	# testing on the validation set
 	echo 'testing on the test set'
+  echo 'source: '$source',target: '$target',aggregation: '$frame_aggregation
 	python test_models.py $num_class $modality $val_list \
 	 $exp_path$modality'/'$model'.pth.tar' $path_data_val 'test.json'\
 	--arch $arch --test_segments $test_segments \
