@@ -32,8 +32,8 @@ class VideoRecord(object):
 
     @property
     def label(self):
-        if ("verb_class" in self._data) and ("noun_class" in self._data):
-            return int(self._data.verb_class), int(self._data.noun_class)
+        if "verb_class" in self._data:
+            return int(self._data.verb_class), 0
         else:
             return 0, 0
 
@@ -110,7 +110,7 @@ class TSNDataSet(data.Dataset):
     def _parse_list(self):
         try:
             label_file = pd.read_pickle(self.list_file).reset_index()
-            self.labels_available =(("verb_class" in label_file) and ("noun_class" in label_file))
+            self.labels_available = "verb_class" in label_file
         except:
             raise Exception("Cannot read pickle, {},containing labels".format(self.list_file))
         self.video_list = [VideoRecord(i,row[1], self.total_segments) for i,row in enumerate(label_file.iterrows())]

@@ -2,9 +2,9 @@
 
 #====== parameters ======#
 dataset="epic" # hmdb_ucf | hmdb_ucf_small | ucf_olympic
-num_class='97,300' # formato: verb, noun (noi abbiamo teoricamente 8,0)
-training=true # true | false
-testing=true # true | false
+num_class='8,8' # formato: verb, noun (noi abbiamo teoricamente 8,0)
+training=$1 # true | false
+testing=$2 # true | false
 modality=RGB
 frame_type=feature # frame | feature
 num_segments=5 # sample frame # of each video for training
@@ -32,7 +32,7 @@ fi
 path_data_root="/content/drive/MyDrive/MLDL_2022/project/EGO_Project_correct/Pre-extracted_feat/RGB/ek_tsm" # depend on users
 path_labels_root="/content/drive/MyDrive/MLDL_2022/project/pkl_files" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
 path_exp_root="model/action-model/" # depend on users
-train_metric="all"
+train_metric="verb"
 if [ "$dataset" = "epic" ]
 then
 	# dataset_source="source_train" # Dx-Dx.train
@@ -53,6 +53,7 @@ then
 	val_list=$path_labels_root'/D'$target'_test.pkl' # '/domain_adaptation_target_test_pre-release_v3.pkl' # 'domain_adaptation_validation_pre-release_v3.pkl'
 
 	path_exp=$path_exp_root'Testexp'
+
 fi
 
 pretrained=none
@@ -160,6 +161,7 @@ then
 	--n_rnn 1 --rnn_cell LSTM --n_directions 1 --n_ts 5 \
 	--use_attn $use_attn --n_attn $n_attn --use_attn_frame $use_attn_frame --use_bn $use_bn --share_params $share_params \
 	-j 4 --bS 512 --top 1 3 5 --add_fc 1 --fc_dim $fc_dim --baseline_type $baseline_type --frame_aggregation $frame_aggregation
+
 fi
 
 # ----------------------------------------------------------------------------------

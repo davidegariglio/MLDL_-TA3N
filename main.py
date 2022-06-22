@@ -239,6 +239,7 @@ def main():
 				if is_best:
 					best_prec1 = prec1_val
 
+				print(prec1)
 				line_update = ' ==> updating the best accuracy' if is_best else ''
 				line_best = "Best score {} vs current score {}".format(best_prec1, prec1) + line_update
 				print(Fore.YELLOW + line_best)
@@ -351,6 +352,8 @@ def train(num_class, source_loader, target_loader, model, criterion, criterion_d
 	attn_epoch_source = torch.Tensor()
 	attn_epoch_target = torch.Tensor()
 	for i, ((source_data, source_label, source_id), (target_data, target_label, target_id)) in data_loader:
+		#print("Source_label: ",source_label)
+		#print("Target_label: ",target_label)
 		# setup hyperparameters
 		p = float(i + start_steps) / total_steps
 		beta_dann = 2. / (1. + np.exp(-1.0 * p)) - 1
