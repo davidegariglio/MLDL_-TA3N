@@ -11,11 +11,11 @@ num_segments=5 # sample frame # of each video for training
 test_segments=5
 val_segments=5
 baseline_type=video
-frame_aggregation=trn-m # method to integrate the frame-level features (avgpool | trn | trn-m | rnn | temconv)
+frame_aggregation=$5 # method to integrate the frame-level features (avgpool | trn | trn-m | rnn | temconv)
 add_fc=1
 fc_dim=512
 arch=TBN # resnet50
-use_target=none #uSv # Sv # uSv # none | Sv | uSv
+use_target=$6 #uSv # Sv # uSv # none | Sv | uSv
 share_params=Y # Y | N
 pred_normalize="N"
 weighted_class_loss_DA="N"
@@ -41,8 +41,8 @@ then
 	num_source=16115 # number of training data (source)
 	num_target=26115 # number of training data (target)
 
-  source=1
-  target=2
+  source=$3
+  target=$4
 
 	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
 	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
