@@ -2,15 +2,16 @@
 
 #====== parameters ======#
 dataset="epic" # hmdb_ucf | hmdb_ucf_small | ucf_olympic
-num_class='97,300'
-training=false # true | false
-testing=true # true | false
-modality=ALL
+num_class='8,8'
+training=$1 # true | false
+testing=$2 # true | false
+modality=RGB
 frame_type=feature # frame | feature
 num_segments=5 # sample frame # of each video for training
 test_segments=5
+val_segments=5
 baseline_type=video
-frame_aggregation=trn-m # method to integrate the frame-level features (avgpool | trn | trn-m | rnn | temconv)
+frame_aggregation=$5 # method to integrate the frame-level features (avgpool | trn | trn-m | rnn | temconv)
 add_fc=1
 fc_dim=512
 arch=TBN # resnet50
@@ -19,6 +20,7 @@ share_params=Y # Y | N
 pred_normalize="N"
 weighted_class_loss_DA="N"
 weighted_class_loss="N"
+adv=$6 # ['Y', 'Y', 'Y'] : [video relation-based adv, video-based adv, frame-based adv]
 
 if [ "$use_target" = "none" ] 
 then
@@ -28,25 +30,27 @@ else
 fi
 
 #====== select dataset ======#
-path_data_root="data/" # depend on users
-path_labels_root="annotations" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
+path_data_root="/content/drive/MyDrive/MLDL_2022/project/EGO_Project_correct/Pre-extracted_feat/RGB/ek_tsm" # depend on users
+path_labels_root="/content/drive/MyDrive/MLDL_2022/project/pkl_files" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
 path_exp_root="model/action-model/" # depend on users
-train_metric="all"
+train_metric="verb"
 if [ "$dataset" = "epic" ]
 then
-	dataset_source="source_train" # depend on users
-	dataset_target="target_train" # depend on users
-	dataset_val="target_test" # _noun" # depend on users
+  source=$3
+  target=$4
+	# dataset_source="source_train" # depend on users
+	# dataset_target="target_train" # depend on users
+	# dataset_val="target_test" # _noun" # depend on users
 	num_source=16115 # number of training data (source)
 	num_target=26115 # number of training data (target)
 
-	path_data_source=$path_data_root'/'$dataset_source
-	path_data_target=$path_data_root'/'$dataset_target
-	path_data_val=$path_data_root'/'$dataset_val
+	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
+	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
+	path_data_val=$path_data_root'/D'$source'-D'$target'_test' #missing _test
 
-	train_source_list=$path_labels_root'/EPIC_100_uda_source_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
-	train_target_list=$path_labels_root'/EPIC_100_uda_target_train_timestamps.pkl' # '/domain_adaptation_target_train_pre-release_v6.pkl'
-	val_list=$path_labels_root'/EPIC_100_uda_target_test_timestamps.pkl' # '/domain_adaptation_target_test_pre-release_v3.pkl' # 'domain_adaptation_validation_pre-release_v3.pkl'
+	train_source_list=$path_labels_root'/D'$source'_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
+	train_target_list=$path_labels_root'/D'$target'_train.pkl' # '/domain_adaptation_target_train_pre-release_v6.pkl'
+	val_list=$path_labels_root'/D'$target'_test.pkl' # '/domain_adaptation_target_test_pre-release_v3.pkl' # 'domain_adaptation_validation_pre-release_v3.pkl'
 
 	path_exp=$path_exp_root'Testexp'
 fi
@@ -58,18 +62,18 @@ pretrained=none
 dis_DA=none # none | DAN | JAN
 alpha=0 # depend on users
 
-adv_pos_0=Y # Y | N (discriminator for relation features)
-adv_DA=RevGrad # none | RevGrad
+#adv_pos_0=Y # Y | N (discriminator for relation features)
+adv_DA=none # none | RevGrad
 beta_0=0.75 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
 beta_1=0.75 #0.75 # U->H: 0.75 | H->U: 0.75
 beta_2=0.5 #0.5 # U->H: 0.5 | H->U: 0.5
 
-use_attn=TransAttn # none | TransAttn | general
+use_attn=none # none | TransAttn | general
 n_attn=1
 use_attn_frame=none # none | TransAttn | general
 
 use_bn=none # none | AdaBN | AutoDIAL
-add_loss_DA=attentive_entropy # none | target_entropy | attentive_entropy
+add_loss_DA=none # none | target_entropy | attentive_entropy
 gamma=0.003 # U->H: 0.003 | H->U: 0.3
 
 ens_DA=none # none | MCD
@@ -109,7 +113,6 @@ fi
 
 echo 'exp_path: '$exp_path
 
-
 #====== select mode ======#
 if ($training) 
 then
@@ -131,7 +134,7 @@ then
 	--num_segments $num_segments --val_segments $val_segments --add_fc $add_fc --fc_dim $fc_dim --dropout_i 0.5 --dropout_v 0.5 \
 	--use_target $use_target --share_params $share_params \
 	--dis_DA $dis_DA --alpha $alpha --place_dis N Y N \
-	--adv_DA $adv_DA --beta $beta_0 $beta_1 $beta_2 --place_adv $adv_pos_0 Y Y \
+	--adv_DA $adv_DA --beta $beta_0 $beta_1 $beta_2 --place_adv $adv \
 	--use_bn $use_bn --add_loss_DA $add_loss_DA --gamma $gamma \
 	--ens_DA $ens_DA --mu $mu \
 	--use_attn $use_attn --n_attn $n_attn --use_attn_frame $use_attn_frame \
