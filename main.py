@@ -241,7 +241,7 @@ def main():
 
 				line_update = ' ==> updating the best accuracy' if is_best else ''
 				line_best = "Best score {} vs current score {}".format(best_prec1, prec1) + line_update
-				#print(Fore.YELLOW + line_best)
+				print(Fore.YELLOW + line_best)
 				val_short_file.write('%.3f\n' % prec1)
 
 				best_prec1 = max(prec1, best_prec1)
@@ -351,8 +351,6 @@ def train(num_class, source_loader, target_loader, model, criterion, criterion_d
 	attn_epoch_source = torch.Tensor()
 	attn_epoch_target = torch.Tensor()
 	for i, ((source_data, source_label, source_id), (target_data, target_label, target_id)) in data_loader:
-		#print("Source_label: ",source_label)
-		#print("Target_label: ",target_label)
 		# setup hyperparameters
 		p = float(i + start_steps) / total_steps
 		beta_dann = 2. / (1. + np.exp(-1.0 * p)) - 1
@@ -702,8 +700,8 @@ def train(num_class, source_loader, target_loader, model, criterion, criterion_d
 				top1_noun=top1_noun, top5_verb=top5_verb, top5_noun=top5_noun, top1_action=top1_action, top5_action=top5_action,
 				lr=optimizer.param_groups[0]['lr'])
 
-			'''if i % args.show_freq == 0:
-				print(line)'''
+			if i % args.show_freq == 0:
+				print(line)
 
 			log.write('%s\n' % line)
 
@@ -850,8 +848,8 @@ def validate(val_loader, model, criterion, num_class, epoch, log, tensor_writer)
 					   top1_verb=top1_verb, top5_verb=top5_verb, top1_noun=top1_noun, top5_noun=top5_noun,
 						top1_action=top1_action, top5_action=top5_action)
 
-				'''if i % args.show_freq == 0:
-					print(line)'''
+				if i % args.show_freq == 0:
+					print(line)
 
 				log.write('%s\n' % line)
 
@@ -866,9 +864,9 @@ def validate(val_loader, model, criterion, num_class, epoch, log, tensor_writer)
 			tensor_writer.add_embedding(feat_val_display, metadata=label_val_verb_display.data, global_step=epoch, tag='validation')
 
 
-	'''print(('Testing Results: Prec@1 verb {top1_verb.avg:.3f}  Prec@1 noun {top1_noun.avg:.3f} Prec@1 action {top1_action.avg:.3f} Prec@5 verb {top5_verb.avg:.3f} Prec@5 noun {top5_noun.avg:.3f} Prec@5 action {top5_action.avg:.3f} Loss {loss.avg:.5f}'
+	print(('Testing Results: Prec@1 verb {top1_verb.avg:.3f}  Prec@1 noun {top1_noun.avg:.3f} Prec@1 action {top1_action.avg:.3f} Prec@5 verb {top5_verb.avg:.3f} Prec@5 noun {top5_noun.avg:.3f} Prec@5 action {top5_action.avg:.3f} Loss {loss.avg:.5f}'
 		   .format(top1_verb=top1_verb, top1_noun=top1_noun, top1_action=top1_action, top5_verb=top5_verb, top5_noun=top5_noun, top5_action=top5_action, loss=losses)))
-'''
+
 	log.write(('Testing Results: Prec@1 verb {top1_verb.avg:.3f}  Prec@1 noun {top1_noun.avg:.3f} Prec@1 action {top1_action.avg:.3f} Prec@5 verb {top5_verb.avg:.3f} Prec@5 noun {top5_noun.avg:.3f} Prec@5 action {top5_action.avg:.3f} Loss {loss.avg:.5f}\n'
 		   .format(top1_verb=top1_verb, top1_noun=top1_noun, top1_action=top1_action, top5_verb=top5_verb, top5_noun=top5_noun, top5_action=top5_action, loss=losses)))
 

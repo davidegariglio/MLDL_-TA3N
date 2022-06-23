@@ -63,7 +63,7 @@ dis_DA=none # none | DAN | JAN
 alpha=0 # depend on users
 
 #adv_pos_0=Y # Y | N (discriminator for relation features)
-adv_DA=none # none | RevGrad
+adv_DA=RevGrad # none | RevGrad
 beta_0=0.75 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
 beta_1=0.75 #0.75 # U->H: 0.75 | H->U: 0.75
 beta_2=0.5 #0.5 # U->H: 0.5 | H->U: 0.5
@@ -128,7 +128,7 @@ then
 	gd=20
 	
 	#------ main command ------#
-	echo $modality
+
 	python main.py $num_class $modality $train_source_list $train_target_list $val_list $path_data_val $path_data_source $path_data_target --exp_path $exp_path \
 	--train_metric $train_metric --dann_warmup --arch $arch --pretrained $pretrained --baseline_type $baseline_type --frame_aggregation $frame_aggregation \
 	--num_segments $num_segments --val_segments $val_segments --add_fc $add_fc --fc_dim $fc_dim --dropout_i 0.5 --dropout_v 0.5 \
