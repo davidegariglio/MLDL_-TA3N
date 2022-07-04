@@ -59,8 +59,8 @@ pretrained=none
 
 #====== parameters for algorithms ======#
 # parameters for DA approaches
-dis_DA=none # none | DAN | JAN
-alpha=0 # depend on users
+dis_DA=DAN # none | DAN | JAN
+alpha=1 # depend on users
 
 #adv_pos_0=Y # Y | N (discriminator for relation features)
 adv_DA=RevGrad # none | RevGrad
@@ -73,7 +73,7 @@ n_attn=1
 use_attn_frame=none # none | TransAttn | general
 
 use_bn=none # none | AdaBN | AutoDIAL
-add_loss_DA=none # none | target_entropy | attentive_entropy
+add_loss_DA=target_entropy # none | target_entropy | attentive_entropy
 gamma=0.003 # U->H: 0.003 | H->U: 0.3
 
 ens_DA=none # none | MCD
@@ -133,7 +133,7 @@ then
 	--train_metric $train_metric --dann_warmup --arch $arch --pretrained $pretrained --baseline_type $baseline_type --frame_aggregation $frame_aggregation \
 	--num_segments $num_segments --val_segments $val_segments --add_fc $add_fc --fc_dim $fc_dim --dropout_i 0.5 --dropout_v 0.5 \
 	--use_target $use_target --share_params $share_params \
-	--dis_DA $dis_DA --alpha $alpha --place_dis N Y N \
+	--dis_DA $dis_DA --alpha $alpha --place_dis $adv \
 	--adv_DA $adv_DA --beta $beta_0 $beta_1 $beta_2 --place_adv $adv \
 	--use_bn $use_bn --add_loss_DA $add_loss_DA --gamma $gamma \
 	--ens_DA $ens_DA --mu $mu \
@@ -141,7 +141,7 @@ then
 	--pred_normalize $pred_normalize --weighted_class_loss_DA $weighted_class_loss_DA --weighted_class_loss $weighted_class_loss \
 	--gd $gd --lr $lr --lr_decay $lr_decay --lr_adaptive $lr_adaptive --lr_steps $lr_steps_1 $lr_steps_2 --epochs $epochs --optimizer $optimizer \
 	--n_rnn 1 --rnn_cell LSTM --n_directions 1 --n_ts 5 --tensorboard \
-	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model \
+	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model --eval_freq 5\
 
 fi
 
