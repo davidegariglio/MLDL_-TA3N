@@ -113,6 +113,14 @@ fi
 
 echo 'exp_path: '$exp_path
 
+# Parameters search, if present
+if [ "$#" -ge 7 ];then
+  for i in "${@:7}"
+  do
+    echo "$i"
+  done
+fi
+
 #====== select mode ======#
 if ($training) 
 then
