@@ -115,10 +115,15 @@ echo 'exp_path: '$exp_path
 
 # Parameters search, if present
 if [ "$#" -ge 7 ];then
-  for i in "${@:7}"
-  do
-    echo "$i"
-  done
+  alpha=$7
+  beta_0=$8
+  beta_1=$9
+  beta_2="${10}"
+  gamma="${11}"
+  bS="${12}"
+  bS_2=$((bS * num_target / num_source ))
+  echo "Test" >> results.txt
+  echo "Alpha: $alpha B0: $beta_0 B1: $beta_1 B2: $beta_2 Gamma: $gamma bS: ${bS}" >> results.txt
 fi
 
 #====== select mode ======#
@@ -149,7 +154,7 @@ then
 	--pred_normalize $pred_normalize --weighted_class_loss_DA $weighted_class_loss_DA --weighted_class_loss $weighted_class_loss \
 	--gd $gd --lr $lr --lr_decay $lr_decay --lr_adaptive $lr_adaptive --lr_steps $lr_steps_1 $lr_steps_2 --epochs $epochs --optimizer $optimizer \
 	--n_rnn 1 --rnn_cell LSTM --n_directions 1 --n_ts 5 --tensorboard \
-	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model --eval_freq 5\
+	-b $bS $bS_2 $bS_2 -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model --eval_freq 5\
 
 fi
 
