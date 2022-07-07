@@ -60,13 +60,13 @@ pretrained=none
 #====== parameters for algorithms ======#
 # parameters for DA approaches
 dis_DA=DAN # none | DAN | JAN
-alpha=1 # depend on users
+alpha=$7 # depend on users
 
 #adv_pos_0=Y # Y | N (discriminator for relation features)
 adv_DA=RevGrad # none | RevGrad
-beta_0=0.75 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
-beta_1=0.75 #0.75 # U->H: 0.75 | H->U: 0.75
-beta_2=0.5 #0.5 # U->H: 0.5 | H->U: 0.5
+beta_0=$8 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
+beta_1=$9 #0.75 # U->H: 0.75 | H->U: 0.75
+beta_2=$10 #0.5 # U->H: 0.5 | H->U: 0.5
 
 use_attn=none # none | TransAttn | general
 n_attn=1
@@ -74,13 +74,13 @@ use_attn_frame=none # none | TransAttn | general
 
 use_bn=none # none | AdaBN | AutoDIAL
 add_loss_DA=target_entropy # none | target_entropy | attentive_entropy
-gamma=0.003 # U->H: 0.003 | H->U: 0.3
+gamma=$11 # U->H: 0.003 | H->U: 0.3
 
 ens_DA=none # none | MCD
 mu=0
 
 # parameters for architectures
-bS=128 # batch size
+bS=$12 # batch size
 bS_2=$((bS * num_target / num_source ))
 
 echo '('$bS', '$bS_2')'
