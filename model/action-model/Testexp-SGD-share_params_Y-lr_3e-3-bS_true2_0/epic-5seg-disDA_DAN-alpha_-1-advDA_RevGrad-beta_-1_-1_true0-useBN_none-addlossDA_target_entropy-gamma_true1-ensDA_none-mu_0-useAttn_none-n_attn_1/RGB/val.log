@@ -1,0 +1,2 @@
+Test: [5][0/13]	Time 0.263 (0.263)	Loss 1.7583 (1.7583)	Prec@1 verb 31.884 (31.884)	Prec@1 noun 0.000 (0.000)	Prec@1 action 0.000 (0.000)	Prec@5 verb 88.889 (88.889)	Prec@5 noun100.000 (100.000)	Prec@5 action88.889 (88.889)	
+Testing Results: Prec@1 verb 29.539  Prec@1 noun 0.000 Prec@1 action 0.000 Prec@5 verb 86.733 Prec@5 noun 100.000 Prec@5 action 86.733 Loss 1.82871

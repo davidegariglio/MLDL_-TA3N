@@ -122,8 +122,6 @@ if [ "$#" -ge 7 ];then
   gamma="${11}"
   bS="${12}"
   bS_2=$((bS * num_target / num_source ))
-  echo "Test" >> results.txt
-  echo "Alpha: $alpha B0: $beta_0 B1: $beta_1 B2: $beta_2 Gamma: $gamma bS: ${bS}" >> results.txt
 fi
 
 #====== select mode ======#

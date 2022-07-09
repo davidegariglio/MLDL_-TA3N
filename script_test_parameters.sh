@@ -9,18 +9,31 @@ bs=(64 128 256)
 source=1
 target=2
 aggr=avgpool
+if [ $aggr = "avgpool" ];then
+  g=0.003
+  b=64
+else
+  g=0.03
+  b=128
+fi
 for alpha in "${alphas[@]}"; do
-    for b0 in "${beta0[@]}"; do
-        for b1 in "${beta1[@]}"; do
+  echo "Alpha: $alpha" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
+    #for b0 in "${beta0[@]}"; do
+      #echo -e "\tBeta0: $b0" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
+        #for b1 in "${beta1[@]}"; do
+          #echo -e "\t\tBeta1: $b1" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
             for b2 in "${beta2[@]}"; do
+              echo -e "\tBeta2: $b2" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
                 for g in "${gamma[@]}"; do
+                  echo -e "\t\tGamma: $g" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
                     for b in "${bs[@]}"; do
-                        # echo $alpha
+                      echo -e "\t\t\tBatch: $b" >> ../drive/MyDrive/MLDL_2022/project/parameters_D1-D2_avgpool.txt
+                        rm -rf model
                         ./script_test_ta3n.sh true true $source $target $aggr 'N N Y'\
-                        $alpha $b0 $b1 $b2 $g $b
+                        $alpha -1 -1 $b2 $g $b
                     done
                 done
             done
-        done
-    done
+        #done
+    #done
 done
