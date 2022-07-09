@@ -17,7 +17,7 @@ else
   b=128
 fi
 
-path='../drive/MyDrive/MLDL_2022/project/parameters_D'$source'-D'$target''$aggr'_N_N_Y.txt'
+path='../drive/MyDrive/MLDL_2022/project/parameters_D'$source'-D'$target'_'$aggr'_N_N_Y.txt'
 
 for alpha in "${alphas[@]}"; do
   echo "Alpha: $alpha" >> "$path"
