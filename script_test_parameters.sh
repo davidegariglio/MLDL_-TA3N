@@ -7,7 +7,7 @@ gamma=(0.003 0.03 0.3)
 bs=(64 128 256)
 
 source=1
-target=2
+target=3
 aggr=avgpool
 if [ $aggr = "avgpool" ];then
   g=0.003
@@ -17,7 +17,7 @@ else
   b=128
 fi
 
-path='../drive/MyDrive/MLDL_2022/project/parametersD'$source'-D'$target''$aggr'_N_N_Y.txt'
+path='../drive/MyDrive/MLDL_2022/project/parameters_D'$source'-D'$target''$aggr'_N_N_Y.txt'
 
 for alpha in "${alphas[@]}"; do
   echo "Alpha: $alpha" >> "$path"
