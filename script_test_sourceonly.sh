@@ -45,7 +45,7 @@ then
   target=$4
 
 	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
-	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
+	path_data_target=$path_data_root'/D'$target'-D'$target'_train'
 	path_data_val=$path_data_root'/D'$source'-D'$target'_test' #missing _test
 
 	train_source_list=$path_labels_root'/D'$source'_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
