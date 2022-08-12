@@ -122,7 +122,7 @@ class VideoModel(nn.Module):
 			model_test = C3D()
 			self.feature_dim = model_test.fc7.in_features
 		elif base_model == "TBN" and modality=="ALL":
-			self.feature_dim = 3072
+			self.feature_dim = 4096
 		elif base_model == "TBN":
 			self.feature_dim = 2048
 		else:

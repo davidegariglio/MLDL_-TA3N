@@ -5,7 +5,7 @@ dataset="epic" # hmdb_ucf | hmdb_ucf_small | ucf_olympic
 num_class='8,8' # formato: verb, noun (noi abbiamo teoricamente 8,0)
 training=$1 # true | false
 testing=$2 # true | false
-modality=RGB
+modality=ALL
 frame_type=feature # frame | feature
 num_segments=5 # sample frame # of each video for training
 test_segments=5
@@ -29,7 +29,7 @@ else
 fi
 
 #====== select dataset ======#
-path_data_root="/content/drive/MyDrive/MLDL_2022/project/EGO_Project_correct/Pre-extracted_feat/RGB/ek_tsm" # depend on users
+path_data_root="/content/drive/MyDrive/MLDL_2022/project/EGO_Project_correct/multimodal_pkl" # depend on users
 path_labels_root="/content/drive/MyDrive/MLDL_2022/project/pkl_files" #"/jmain01/home/JAD026/dxd01/jjm50-dxd01/DA_Features/train_test/train/" # depend on users
 path_exp_root="model/action-model/" # depend on users
 train_metric="verb"
@@ -140,7 +140,7 @@ then
 	--pred_normalize $pred_normalize --weighted_class_loss_DA $weighted_class_loss_DA --weighted_class_loss $weighted_class_loss \
 	--gd $gd --lr $lr --lr_decay $lr_decay --lr_adaptive $lr_adaptive --lr_steps $lr_steps_1 $lr_steps_2 --epochs $epochs --optimizer $optimizer \
 	--n_rnn 1 --rnn_cell LSTM --n_directions 1 --n_ts 5 --tensorboard \
-	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model \
+	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model --eval_freq 5 \
 
 fi
 

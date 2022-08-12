@@ -335,9 +335,9 @@ def validate(val_loader, verb_model, criterion, num_class, noun_model=None, val_
 			batch_time.update(time.time() - end)
 			end = time.time()
 
-	with open("../drive/MyDrive/MLDL_2022/project/parameters_D1-D3_avgpool_N_N_Y.txt", "a") as f:
-		f.write(f"\t\t\t\tTesting Results: {top1_verb.avg:.3f}\n")
-		f.close()
+	# with open("../drive/MyDrive/MLDL_2022/project/parameters_D1-D3_avgpool_N_N_Y.txt", "a") as f:
+	# 	f.write(f"\t\t\t\tTesting Results: {top1_verb.avg:.3f}\n")
+	# 	f.close()
 		
 	if val_labels:
 		print(('Testing Results: Prec@1 verb {top1_verb.avg:.3f}  Prec@1 noun {top1_noun.avg:.3f} Prec@1 action {top1_action.avg:.3f} Prec@5 verb {top5_verb.avg:.3f} Prec@5 noun {top5_noun.avg:.3f} Prec@5 action {top5_action.avg:.3f} Loss {loss.avg:.5f}'
