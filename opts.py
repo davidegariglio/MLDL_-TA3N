@@ -1,7 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(description="PyTorch implementation of Temporal Segment Networks")
 parser.add_argument('num_class', type=str, default="classInd.txt")
-parser.add_argument('modality', type=str, choices=['Audio', 'RGB', 'Flow', 'RGBDiff', 'RGBDiff2', 'RGBDiffplus', 'ALL'])
+parser.add_argument('modality', type=str, choices=['Audio', 'RGB', 'Flow', 'RGB_Flow', 'RGBDiff', 'RGBDiff2', 'RGBDiffplus', 'ALL'])
 parser.add_argument('train_source_list', type=str)
 parser.add_argument('train_target_list', type=str)
 parser.add_argument('val_list', type=str)

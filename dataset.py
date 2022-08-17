@@ -50,6 +50,10 @@ class TSNDataSet(data.Dataset):
                 data = pickle.load(f)
                 if modality == "ALL":
                     self.data = np.concatenate(list(data['features'].values()), -1)
+                elif modality == "RGB_Flow":
+                    rgb = data['features']['RGB']
+                    flow = data['features']['Flow']
+                    self.data = np.concatenate( ( list(rgb), list(flow) ), -1)
                 else:
                     self.data = data['features'][modality]
                 data_narrations = data['narration_ids']

@@ -28,7 +28,7 @@ init(autoreset=True)
 # options
 parser = argparse.ArgumentParser(description="Standard video-level testing")
 parser.add_argument('num_class', type=str, default="classInd.txt")
-parser.add_argument('modality', type=str, choices=['ALL', 'Audio','RGB', 'Flow', 'RGBDiff', 'RGBDiff2', 'RGBDiffplus'])
+parser.add_argument('modality', type=str, choices=['ALL', 'Audio', 'RGB', 'Flow', 'RGB_Flow', 'RGBDiff', 'RGBDiff2', 'RGBDiffplus'])
 parser.add_argument('test_list', type=str)
 parser.add_argument('weights', type=str)
 parser.add_argument('test_target_data', type=str)

@@ -121,8 +121,10 @@ class VideoModel(nn.Module):
 			from C3D_model import C3D
 			model_test = C3D()
 			self.feature_dim = model_test.fc7.in_features
-		elif base_model == "TBN" and modality=="ALL":
+		elif base_model == "TBN" and modality=="RGB_Flow":
 			self.feature_dim = 4096
+		elif base_model == "TBN" and modality=="ALL":
+			self.feature_dim = 5120
 		elif base_model == "TBN":
 			self.feature_dim = 2048
 		else:
