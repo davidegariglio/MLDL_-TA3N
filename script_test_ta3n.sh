@@ -45,7 +45,7 @@ then
 	num_target=26115 # number of training data (target)
 
 	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
-	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
+	path_data_target=$path_data_root'/D'$target'-D'$target'_train'
 	path_data_val=$path_data_root'/D'$source'-D'$target'_test' #missing _test
 
 	train_source_list=$path_labels_root'/D'$source'_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
@@ -59,11 +59,11 @@ pretrained=none
 
 #====== parameters for algorithms ======#
 # parameters for DA approaches
-dis_DA=DAN # none | DAN | JAN
+dis_DA=none # none | DAN | JAN
 alpha=$7 # depend on users
 
 #adv_pos_0=Y # Y | N (discriminator for relation features)
-adv_DA=RevGrad # none | RevGrad
+adv_DA=none # none | RevGrad
 beta_0=$8 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
 beta_1=$9 #0.75 # U->H: 0.75 | H->U: 0.75
 beta_2=$10 #0.5 # U->H: 0.5 | H->U: 0.5
@@ -73,14 +73,14 @@ n_attn=1
 use_attn_frame=none # none | TransAttn | general
 
 use_bn=none # none | AdaBN | AutoDIAL
-add_loss_DA=target_entropy # none | target_entropy | attentive_entropy
+add_loss_DA=none # none | target_entropy | attentive_entropy
 gamma=$11 # U->H: 0.003 | H->U: 0.3
 
 ens_DA=none # none | MCD
 mu=0
 
 # parameters for architectures
-bS=$12 # batch size
+bS=64 # batch size
 bS_2=$((bS * num_target / num_source ))
 
 echo '('$bS', '$bS_2')'
