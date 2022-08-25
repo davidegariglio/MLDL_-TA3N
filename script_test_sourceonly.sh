@@ -15,7 +15,7 @@ frame_aggregation=$5 # method to integrate the frame-level features (avgpool | t
 add_fc=1
 fc_dim=512
 arch=TBN # resnet50
-use_target=$6 #uSv # Sv # uSv # none | Sv | uSv
+use_target=none #uSv # Sv # uSv # none | Sv | uSv
 share_params=Y # Y | N
 pred_normalize="N"
 weighted_class_loss_DA="N"
@@ -45,7 +45,7 @@ then
   target=$4
 
 	path_data_source=$path_data_root'/D'$source'-D'$source'_train'
-	path_data_target=$path_data_root'/D'$source'-D'$target'_train'
+	path_data_target=$path_data_root'/D'$target'-D'$target'_train'
 	path_data_val=$path_data_root'/D'$source'-D'$target'_test' #missing _test
 
 	train_source_list=$path_labels_root'/D'$source'_train.pkl' # '/domain_adaptation_source_train_pre-release_v3.pkl'
@@ -81,7 +81,7 @@ ens_DA=none # none | MCD
 mu=0
 
 # parameters for architectures
-bS=128 # batch size
+bS=64 # batch size
 bS_2=$((bS * num_target / num_source ))
 
 echo '('$bS', '$bS_2')'
@@ -132,15 +132,15 @@ then
 	--train_metric $train_metric --dann_warmup --arch $arch --pretrained $pretrained --baseline_type $baseline_type --frame_aggregation $frame_aggregation \
 	--num_segments $num_segments --val_segments $val_segments --add_fc $add_fc --fc_dim $fc_dim --dropout_i 0.5 --dropout_v 0.5 \
 	--use_target $use_target --share_params $share_params \
-	--dis_DA $dis_DA --alpha $alpha --place_dis N Y N \
-	--adv_DA $adv_DA --beta $beta_0 $beta_1 $beta_2 --place_adv $adv_pos_0 Y Y \
+	--dis_DA $dis_DA --alpha $alpha --place_dis N N N \
+	--adv_DA $adv_DA --beta $beta_0 $beta_1 $beta_2 --place_adv N N N \
 	--use_bn $use_bn --add_loss_DA $add_loss_DA --gamma $gamma \
 	--ens_DA $ens_DA --mu $mu \
 	--use_attn $use_attn --n_attn $n_attn --use_attn_frame $use_attn_frame \
 	--pred_normalize $pred_normalize --weighted_class_loss_DA $weighted_class_loss_DA --weighted_class_loss $weighted_class_loss \
 	--gd $gd --lr $lr --lr_decay $lr_decay --lr_adaptive $lr_adaptive --lr_steps $lr_steps_1 $lr_steps_2 --epochs $epochs --optimizer $optimizer \
 	--n_rnn 1 --rnn_cell LSTM --n_directions 1 --n_ts 5 --tensorboard \
-	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model \
+	-b $bS $bS_2 $bS -j 4 -ef 1 -pf 50 -sf 50 --copy_list N N --save_model --eval_freq 5 \
 
 fi
 

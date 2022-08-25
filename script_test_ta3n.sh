@@ -18,7 +18,7 @@ arch=TBN # resnet50
 use_target=uSv #uSv # Sv # uSv # none | Sv | uSv
 share_params=Y # Y | N
 pred_normalize="N"
-weighted_class_loss_DA="N"
+weighted_class_loss_DA="Y"
 weighted_class_loss="N"
 adv=$6 # ['Y', 'Y', 'Y'] : [video relation-based adv, video-based adv, frame-based adv]
 
@@ -63,7 +63,7 @@ dis_DA=DAN # none | DAN | JAN
 alpha=$7 # depend on users
 
 #adv_pos_0=Y # Y | N (discriminator for relation features)
-adv_DA=none # none | RevGrad
+adv_DA=RevGrad # none | RevGrad
 beta_0=$8 # 0.75 #0.75 # U->H: 0.75 | H->U: 1
 beta_1=$9 #0.75 # U->H: 0.75 | H->U: 0.75
 beta_2=$10 #0.5 # U->H: 0.5 | H->U: 0.5
